@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_040927) do
   create_table "cards", force: :cascade do |t|
     t.string "name"
     t.text "desc"
-    t.integer "pos", default: 1
+    t.integer "pos"
     t.boolean "closed", default: false
     t.bigint "list_id", null: false
     t.datetime "created_at", precision: 6, null: false

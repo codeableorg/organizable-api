@@ -8,6 +8,6 @@ class Card < ApplicationRecord
   has_many :check_items, through: :checklists
 
   def set_pos
-    self.pos = list.cards.count + 1 if pos.nil?
+    self.pos = list.cards[-2] + 1 if pos.nil?
   end
 end

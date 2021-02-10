@@ -5,6 +5,6 @@ class List < ApplicationRecord
   has_many :cards, dependent: :destroy
 
   def set_pos
-    self.pos = board.lists.count + 1
+    self.pos = board.lists.last.pos + 1
   end
 end
