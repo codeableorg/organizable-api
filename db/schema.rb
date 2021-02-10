@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_040927) do
 
   create_table "lists", force: :cascade do |t|
     t.string "name"
-    t.integer "pos", default: 1
+    t.integer "pos"
     t.boolean "closed", default: false
     t.bigint "board_id", null: false
     t.datetime "created_at", precision: 6, null: false
