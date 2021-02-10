@@ -1,6 +1,6 @@
 class ChecklistsController < ApplicationController
   before_action :authorize_user
-  before_action :set_checklist, only: [:show, :update, :destroy]
+  before_action :set_checklist, only: %i[update destroy]
 
   def create
     @card = Card.find(params[:card_id])
@@ -26,20 +26,21 @@ class ChecklistsController < ApplicationController
   end
 
   private
-    def set_checklist
-      @checklist = Checklist.find(params[:id])
-    end
 
-    def checklist_params
-      params.require(:checklist).permit(:name, :pos)
-    end
+  def set_checklist
+    @checklist = Checklist.find(params[:id])
+  end
 
-    def authorize_user
-      card = Card.find(params[:card_id])
-      card_owner = card.list.board.user
-      unless (current_user == card_owner)
-        errors = { errors: { message: 'Access denied' } }
-        render json: errors, status: :unauthorized
-      end
-    end
+  def checklist_params
+    params.require(:checklist).permit(:name, :pos)
+  end
+
+  def authorize_user
+    card = Card.find(params[:card_id])
+    card_owner = card.list.board.user
+    return if current_user == card_owner
+
+    errors = { errors: { message: 'Access denied' } }
+    render json: errors, status: :unauthorized
+  end
 end

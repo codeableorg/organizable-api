@@ -1,8 +1,8 @@
 class SingleBoardSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :name, :color, :starred, :closed, :labels, :lists
+  attributes :id, :user_id, :name, :color, :starred, :closed, :created_at, :labels, :lists
 
   def lists
-    self.object.lists.map do |list|
+    object.lists.order(:pos).map do |list|
       {
         list_id: list.id,
         name: list.name,
@@ -14,7 +14,7 @@ class SingleBoardSerializer < ActiveModel::Serializer
   end
 
   def list_cards(list)
-    list.cards.map do |card|
+    list.cards.order(:pos).map do |card|
       {
         card_id: card.id,
         name: card.name,
@@ -39,7 +39,7 @@ class SingleBoardSerializer < ActiveModel::Serializer
   end
 
   def labels
-    self.object.labels.map do |label|
+    object.labels.map do |label|
       {
         id: label.id,
         name: label.name,
@@ -49,20 +49,15 @@ class SingleBoardSerializer < ActiveModel::Serializer
     end
   end
 
-  
-  
-
-
-  
   # Todos los datos + un elemento list que tiene listas
   # Cada lista trae sus cards
   # Cada card trae sus labels en un arreglo
   # Cada card trae 2 atributos adicionales: checked_items, completed_checked_items
-  # Cualquier atributo que tenga _ , convertirlo a camelCase 🐫 
+  # Cualquier atributo que tenga _ , convertirlo a camelCase
 
   # list: [
   #   {
-  #     name: "dded", 
+  #     name: "dded",
   #     pos: 1,
   #     closed: false
   #     cards: [
@@ -81,7 +76,7 @@ class SingleBoardSerializer < ActiveModel::Serializer
   #     ]
   #   },
   #   {
-  #     name: "dded", 
+  #     name: "dded",
   #     pos: 1,
   #     closed: false
   #     cards: [
@@ -101,5 +96,4 @@ class SingleBoardSerializer < ActiveModel::Serializer
   #   },
 
   # ]
-
 end

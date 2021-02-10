@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   before_action :authorize_user
-  before_action :set_list, only: [:show, :update, :destroy]
+  before_action :set_list, only: %i[update destroy]
 
   def create
     @board = Board.find(params[:board_id])
@@ -26,20 +26,20 @@ class ListsController < ApplicationController
   end
 
   private
-    def set_list
-      @list = List.find(params[:id])
-    end
 
-    def list_params
-      params.require(:list).permit(:name, :pos, :closed)
-    end
+  def set_list
+    @list = List.find(params[:id])
+  end
 
-    def authorize_user
-      board = Board.find(params[:board_id])
-      unless (current_user == board.user)
-        errors = { errors: { message: 'Access denied' } }
-        render json: errors, status: :unauthorized
-      end
-    end
+  def list_params
+    params.require(:list).permit(:name, :pos, :closed)
+  end
 
+  def authorize_user
+    board = Board.find(params[:board_id])
+    return if current_user == board.user
+
+    errors = { errors: { message: 'Access denied' } }
+    render json: errors, status: :unauthorized
+  end
 end

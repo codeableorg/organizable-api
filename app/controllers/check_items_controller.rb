@@ -1,6 +1,6 @@
 class CheckItemsController < ApplicationController
   before_action :authorize_user
-  before_action :set_check_item, only: [:show, :update, :destroy]
+  before_action :set_check_item, only: %i[update destroy]
 
   def create
     @checklist = Checklist.find(params[:checklist_id])
@@ -26,20 +26,21 @@ class CheckItemsController < ApplicationController
   end
 
   private
-    def set_check_item
-      @check_item = CheckItem.find(params[:id])
-    end
 
-    def check_item_params
-      params.require(:check_item).permit(:name, :pos, :completed)
-    end
+  def set_check_item
+    @check_item = CheckItem.find(params[:id])
+  end
 
-    def authorize_user
-      checklist = Checklist.find(params[:checklist_id])
-      checklist_owner = checklist.card.list.board.user
-      unless (current_user == checklist_owner)
-        errors = { errors: { message: 'Access denied' } }
-        render json: errors, status: :unauthorized
-      end
-    end
+  def check_item_params
+    params.require(:check_item).permit(:name, :pos, :completed)
+  end
+
+  def authorize_user
+    checklist = Checklist.find(params[:checklist_id])
+    checklist_owner = checklist.card.list.board.user
+    return if current_user == checklist_owner
+
+    errors = { errors: { message: 'Access denied' } }
+    render json: errors, status: :unauthorized
+  end
 end

@@ -10,6 +10,6 @@ class User < ApplicationRecord
 
   def self.valid_login?(username, password)
     user = find_by(username: username)
-    user && user.authenticate(password)
+    user&.authenticate(password)
   end
 end

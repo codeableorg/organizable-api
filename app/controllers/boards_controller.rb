@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
-  before_action :authorize_user, except: [:index, :create]
-  before_action :set_board, only: [:show, :update, :destroy]
-  COLORS = ["green", "yellow", "orange", "red", "purple", "blue"]
+  before_action :authorize_user, except: %i[index create]
+  before_action :set_board, only: %i[show update destroy]
+  COLORS = %w[green yellow orange red purple blue].freeze
 
   def index
     @boards = current_user.boards
@@ -15,7 +15,7 @@ class BoardsController < ApplicationController
   def create
     @board = current_user.boards.new(board_params)
     if @board.save
-      COLORS.each {|color| @board.labels.create(name:"", color: color) }
+      COLORS.each { |color| @board.labels.create(name: '', color: color) }
       render json: @board, status: :created, serializer: SingleBoardSerializer
     else
       render json: @board.errors, status: :unprocessable_entity
@@ -35,19 +35,20 @@ class BoardsController < ApplicationController
   end
 
   private
-    def set_board
-      @board = Board.find(params[:id])
-    end
 
-    def board_params
-      params.require(:board).permit(:name, :closed, :desc, :color, :starred)
-    end
+  def set_board
+    @board = Board.find(params[:id])
+  end
 
-    def authorize_user
-      board = Board.find(params[:id])
-      unless (current_user == board.user)
-        errors = { errors: { message: 'Access denied' } }
-        render json: errors, status: :unauthorized
-      end
-    end
+  def board_params
+    params.require(:board).permit(:name, :closed, :desc, :color, :starred)
+  end
+
+  def authorize_user
+    board = Board.find(params[:id])
+    return if current_user == board.user
+
+    errors = { errors: { message: 'Access denied' } }
+    render json: errors, status: :unauthorized
+  end
 end

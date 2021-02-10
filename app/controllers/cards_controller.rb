@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
   before_action :authorize_user
-  before_action :set_card, only: [:show, :update, :destroy]
+  before_action :set_card, only: %i[show update destroy]
 
   def show
     render json: @card
@@ -30,20 +30,21 @@ class CardsController < ApplicationController
   end
 
   private
-    def set_card
-      @card = Card.find(params[:id])
-    end
 
-    def card_params
-      params.require(:card).permit(:name, :desc, :pos, :closed)
-    end
+  def set_card
+    @card = Card.find(params[:id])
+  end
 
-    def authorize_user
-      list = List.find(params[:list_id])
-      list_owner = list.board.user
-      unless (current_user == list_owner)
-        errors = { errors: { message: 'Access denied' } }
-        render json: errors, status: :unauthorized
-      end
-    end
+  def card_params
+    params.require(:card).permit(:name, :desc, :pos, :closed, :list_id)
+  end
+
+  def authorize_user
+    @list = List.find(params[:list_id])
+    list_owner = @list.board.user
+    return if current_user == list_owner
+
+    errors = { errors: { message: 'Access denied' } }
+    render json: errors, status: :unauthorized
+  end
 end

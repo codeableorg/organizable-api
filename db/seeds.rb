@@ -42,34 +42,34 @@ USERS.each do |user_data|
     blue_label = board.labels.find_by(color: "blue")
     blue_label.name = "Important"
 
-    todo = board.lists.create(name: "To Do", pos: 1, closed: false)
-    todo.cards.create(name: "Add Animations", desc: nil, pos: 1, closed: false)
-    todo.cards.create(name: "Refactor functions", desc: nil, pos: 2, closed: false)
-    a11y = todo.cards.create(name: "Improve a11y", desc: nil, pos: 4, closed: false)
+    todo = board.lists.create(name: "To Do", closed: false)
+    todo.cards.create(name: "Add Animations", desc: nil, closed: false)
+    todo.cards.create(name: "Refactor functions", desc: nil, closed: false)
+    a11y = todo.cards.create(name: "Improve a11y", desc: nil, closed: false)
     a11y.labels << blue_label
 
-    doing = board.lists.create(name: "Doing", pos: 2, closed: false)
-    login_logout = doing.cards.create(name: "Login & Logout", desc: nil, pos: 1, closed: false)
-    login = login_logout.checklists.create(name: "Login", pos: 1)
+    doing = board.lists.create(name: "Doing", closed: false)
+    login_logout = doing.cards.create(name: "Login & Logout", desc: nil, closed: false)
+    login = login_logout.checklists.create(name: "Login")
     login_logout.labels << red_label
     login_logout.labels << blue_label
-    login.check_items.create(name: "Analize api", pos: 1, completed: true)
-    login.check_items.create(name: "Create HTML and CSS", pos: 2, completed: true)
-    login.check_items.create(name: "Make fetch request", pos: 4, completed: false)
+    login.check_items.create(name: "Analize api", completed: true)
+    login.check_items.create(name: "Create HTML and CSS", completed: true)
+    login.check_items.create(name: "Make fetch request", completed: false)
 
-    logout = login_logout.checklists.create(name: "Logout", pos: 2)
-    logout.check_items.create(name: "Analize api", pos: 1, completed: true)
-    logout.check_items.create(name: "Create button", pos: 2, completed: true)
-    logout.check_items.create(name: "Make fetch request", pos: 4, completed: false)
+    logout = login_logout.checklists.create(name: "Logout")
+    logout.check_items.create(name: "Analize api", completed: true)
+    logout.check_items.create(name: "Create button", completed: true)
+    logout.check_items.create(name: "Make fetch request", completed: false)
 
-    doing.cards.create(name: "Board Component", desc: nil, pos: 2, closed: false)
-    doing.cards.create(name: "List Component", desc: nil, pos: 4, closed: false)
-    doing.cards.create(name: "Card Component", desc: nil, pos: 8, closed: false)
-    doing.cards.create(name: "Checklist Component", desc: nil, pos: 16, closed: false)
+    doing.cards.create(name: "Board Component", desc: nil, closed: false)
+    doing.cards.create(name: "List Component", desc: nil, closed: false)
+    doing.cards.create(name: "Card Component", desc: nil, closed: false)
+    doing.cards.create(name: "Checklist Component", desc: nil, closed: false)
 
 
-    done = board.lists.create(name: "Done", pos: 4, closed: false)
-    meeting = done.cards.create(name: "Team meeting", desc: "Talk with the team about the project", pos: 1, closed: false)
+    done = board.lists.create(name: "Done", closed: false)
+    meeting = done.cards.create(name: "Team meeting", desc: "Talk with the team about the project", closed: false)
     meeting.labels << blue_label
 
   end

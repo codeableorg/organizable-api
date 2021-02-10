@@ -2,7 +2,7 @@ class CardSerializer < ActiveModel::Serializer
   attributes :id, :list_id, :name, :desc, :pos, :closed, :checklists, :labels
 
   def checklists
-    self.object.checklists.map do |checklist|
+    object.checklists.order(:pos).map do |checklist|
       {
         checklist_id: checklist.id,
         name: checklist.name,
@@ -13,7 +13,7 @@ class CardSerializer < ActiveModel::Serializer
   end
 
   def list_check_items(checklist)
-    checklist.check_items.map do |check_item| 
+    checklist.check_items.order(:pos).map do |check_item|
       {
         check_item_id: check_item.id,
         name: check_item.name,
@@ -22,6 +22,4 @@ class CardSerializer < ActiveModel::Serializer
       }
     end
   end
-
-
 end
