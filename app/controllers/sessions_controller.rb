@@ -13,6 +13,6 @@ class SessionsController < ApplicationController
 
   def destroy
     current_user.invalidate_token
-    head :ok
+    head :no_content
   end
 end
