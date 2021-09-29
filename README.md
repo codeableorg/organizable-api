@@ -83,9 +83,3 @@ To include the token on your headers, add a `key`-`value` pair in this way:
 
 - `key`: Authorization
 - `value`: Token token="`BNZ6hTF2xDya9AqUuvnu9x7i`"
-
-Example with Insomnia:
-
-![](https://p-vvf5mjm.t2.n0.cdn.getcloudapp.com/items/2Nu5qnAO/Image%202020-06-24%20at%201.41.57%20PM.png?v=7c308ec3e6262ac6593faff230c2f67e)
-
-You can include headers using `fetch`, check the documentation 😎
