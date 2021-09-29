@@ -1,5 +1,5 @@
 class SingleBoardSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :name, :color, :starred, :closed, :created_at, :labels, :lists
+  attributes :id, :user_id, :name, :color, :starred, :closed, :created_at, :lists
 
   def lists
     object.lists.order(:pos).map do |list|
@@ -7,7 +7,6 @@ class SingleBoardSerializer < ActiveModel::Serializer
         list_id: list.id,
         name: list.name,
         pos: list.pos,
-        closed: list.closed,
         cards: list_cards(list)
       }
     end
@@ -18,12 +17,12 @@ class SingleBoardSerializer < ActiveModel::Serializer
       {
         card_id: card.id,
         name: card.name,
-        desc: card.desc,
-        pos: card.pos,
-        closed: card.closed,
-        labels: list_labels(card),
-        check_items: card.check_items.size,
-        completed_check_items: card.check_items.where(completed: true).size
+        # desc: card.desc,
+        pos: card.pos
+        # closed: card.closed,
+        # labels: list_labels(card),
+        # check_items: card.check_items.size,
+        # completed_check_items: card.check_items.where(completed: true).size
       }
     end
   end
