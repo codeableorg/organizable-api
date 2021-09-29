@@ -28,16 +28,16 @@ class ListsController < ApplicationController
   private
 
   def set_list
-    @list = List.find(params[:id])
+    @list = @board.lists.find(params[:id])
   end
 
   def list_params
-    params.require(:list).permit(:name, :pos, :closed)
+    params.require(:list).permit(:name, :pos)
   end
 
   def authorize_user
-    board = Board.find(params[:board_id])
-    return if current_user == board.user
+    @board = Board.find(params[:board_id])
+    return if current_user == @board.user
 
     errors = { errors: { message: 'Access denied' } }
     render json: errors, status: :unauthorized

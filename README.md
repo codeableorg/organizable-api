@@ -45,35 +45,12 @@ Manage lists:
 - PATCH /boards/:board_id/lists/:id
 - DELETE /boards/:board_id/lists/:id
 
-Manage labels:
-
-- POST /boards/:board_id/labels
-- PATCH /boards/:board_id/labels/:id
-- DELETE /boards/:board_id/labels/:id
-
 Manage cards:
 
 - POST /lists/:list_id/cards
-- GET /lists/:list_id/cards/:id \* This endpoint return additional data about checklist and check_items
+- GET /lists/:list_id/cards/:id
 - PATCH /lists/:list_id/cards/:id
 - DELETE /lists/:list_id/cards/:id
-
-Manage checklists:
-
-- POST /cards/:card_id/checklists
-- PATCH /cards/:card_id/checklists/:id
-- DELETE /cards/:card_id/checklists/:id
-
-Manage check items:
-
-- POST /checklists/:checklist_id/check_items
-- PATCH /checklists/:checklist_id/check_items/:id
-- DELETE /checklists/:checklist_id/check_items/:id
-
-Manage Card-Label relationship:
-
-- POST /cards/:card_id/cards_labels
-- DELETE /cards/:card_id/cards_labels
 
 ### API Authentication
 

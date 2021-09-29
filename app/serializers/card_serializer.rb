@@ -1,5 +1,5 @@
 class CardSerializer < ActiveModel::Serializer
-  attributes :id, :list_id, :name, :desc, :pos, :closed, :checklists, :labels
+  attributes :id, :list_id, :name, :pos
 
   def checklists
     object.checklists.order(:pos).map do |checklist|
