@@ -27,7 +27,7 @@ USERS.each do |user_data|
 
   user = User.create(user_data)
 
-  user.boards.create(name: "Organizable", closed: false, color: "lime", starred: true)
+  organizable = user.boards.create(name: "Organizable", closed: false, color: "lime", starred: true)
   user.boards.create(name: "Codeable", closed: false, color: "red", starred: true)
   user.boards.create(name: "Portafolio", closed: false, color: "blue", starred: true)
   user.boards.create(name: "DOTA", closed: false, color: "orange", starred: false)
@@ -40,21 +40,20 @@ USERS.each do |user_data|
   user.boards.create(name: "Codeable Postulation", closed: true, color: "blue", starred: false)
   user.boards.create(name: "Odin Project", closed: true, color: "red", starred: false)
 
-  user.boards.each do |board|
-    COLORS.each {|color| board.labels.create(name:"", color: color) }
+    COLORS.each {|color| organizable.labels.create(name:"", color: color) }
 
-    red_label = board.labels.find_by(color: "red")
+    red_label = organizable.labels.find_by(color: "red")
     red_label.name = "Urgent"
-    blue_label = board.labels.find_by(color: "blue")
+    blue_label = organizable.labels.find_by(color: "blue")
     blue_label.name = "Important"
 
-    todo = board.lists.create(name: "To Do", closed: false)
+    todo = organizable.lists.create(name: "To Do", closed: false)
     todo.cards.create(name: "Add Animations", desc: nil, closed: false)
     todo.cards.create(name: "Refactor functions", desc: nil, closed: false)
     a11y = todo.cards.create(name: "Improve a11y", desc: nil, closed: false)
     a11y.labels << blue_label
 
-    doing = board.lists.create(name: "Doing", closed: false)
+    doing = organizable.lists.create(name: "Doing", closed: false)
     login_logout = doing.cards.create(name: "Login & Logout", desc: nil, closed: false)
     login = login_logout.checklists.create(name: "Login")
     login_logout.labels << red_label
@@ -74,9 +73,7 @@ USERS.each do |user_data|
     doing.cards.create(name: "Checklist Component", desc: nil, closed: false)
 
 
-    done = board.lists.create(name: "Done", closed: false)
+    done = organizable.lists.create(name: "Done", closed: false)
     meeting = done.cards.create(name: "Team meeting", desc: "Talk with the team about the project", closed: false)
     meeting.labels << blue_label
-
-  end
 end
