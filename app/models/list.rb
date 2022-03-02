@@ -9,13 +9,13 @@ class List < ApplicationRecord
 
   def set_pos
     if board.lists.count.zero?
-      self.pos = 1
+      self.pos = 0
     elsif pos.nil?
-      self.pos = board.lists.most_recently_created.pos + 1
+      self.pos = board.lists.size - 1
     end
   end
 
   def update_pos
-    self.pos = board.lists.last.pos + 1 if pos.nil?
+    self.pos = Board.find(self.board_id).lists.order(:pos).last.pos + 1 if pos.blank?
   end
 end

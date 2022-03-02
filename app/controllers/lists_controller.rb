@@ -25,6 +25,22 @@ class ListsController < ApplicationController
     @list.destroy
   end
 
+  def sort
+    ids = params[:ids]
+
+    lists = ids.map.with_index do |id, index|
+      list = List.find(id)
+      list.pos = index
+      list
+    end
+
+    List.transaction do
+      lists.each(&:save!)
+    end
+
+    render json: lists
+  end
+
   private
 
   def set_list

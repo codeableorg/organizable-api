@@ -29,6 +29,22 @@ class CardsController < ApplicationController
     @card.destroy
   end
 
+  def sort
+    ids = params[:ids]
+
+    cards = ids.map.with_index do |id, index|
+      card = Card.find(id)
+      card.pos = index
+      card
+    end
+
+    Card.transaction do
+      cards.each(&:save!)
+    end
+
+    render json: cards
+  end
+
   private
 
   def set_card

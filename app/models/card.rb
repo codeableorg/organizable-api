@@ -12,13 +12,13 @@ class Card < ApplicationRecord
 
   def set_pos
     if list.cards.count.zero?
-      self.pos = 1
+      self.pos = 0
     elsif pos.nil?
-      self.pos = list.cards.most_recently_created.pos + 1
+      self.pos = list.cards.size - 1
     end
   end
 
   def update_pos
-    self.pos = list.cards.last.pos + 1 if pos.nil?
+    self.pos = List.find(self.list_id).cards.order(:pos).last.pos + 1 if pos.blank?
   end
 end

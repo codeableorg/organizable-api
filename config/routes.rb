@@ -2,12 +2,16 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
 
   resources :boards do
-    resources :lists, only: %i[create update destroy]
+    resources :lists, only: %i[create update destroy] do
+      post :sort, on: :collection
+    end
     resources :labels, only: %i[create update destroy]
   end
-
+  
   resources :lists, only: [] do
-    resources :cards, except: [:index]
+    resources :cards, except: [:index] do
+      post :sort, on: :collection
+    end
   end
 
   resources :cards, only: [] do
