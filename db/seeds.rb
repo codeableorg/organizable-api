@@ -1,3 +1,5 @@
+puts "Start seeding..."
+
 COLORS = ["green", "yellow", "orange", "red", "purple", "blue"]
 USERS = [
   {
@@ -6,15 +8,19 @@ USERS = [
     first_name: "User",
     last_name: "Test",
     password: "123456"
-  }, 
-  { 
-    username: "codeable2",
-    email: "codeable2@mail.com",
-    first_name: "User2",
-    last_name: "Test2",
-    password: "123456"
   }
 ]
+
+30.times do |n|
+  user = {
+    username: "user#{n + 1}",
+    email: "user#{n + 1}@mail.com",
+    first_name: "User#{n + 1}",
+    last_name: "Test",
+    password: "123456"
+  }
+  USERS.push(user)
+end
 
 
 USERS.each do |user_data|
