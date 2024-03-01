@@ -1,5 +1,7 @@
 puts "Start seeding..."
 
+User.destroy_all
+
 COLORS = ["green", "yellow", "orange", "red", "purple", "blue"]
 USERS = [
   {
@@ -77,3 +79,5 @@ USERS.each do |user_data|
     meeting = done.cards.create(name: "Team meeting", desc: "Talk with the team about the project", closed: false)
     meeting.labels << blue_label
 end
+
+puts "End seeding..."
